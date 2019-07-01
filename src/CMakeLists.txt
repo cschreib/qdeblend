@@ -26,9 +26,9 @@ add_executable(go_imfit go_imfit.cpp)
 target_link_libraries(go_imfit ${VIF_LIBRARIES})
 install(TARGETS go_imfit DESTINATION bin)
 
-add_executable(lage_scale_filter lage_scale_filter.cpp)
-target_link_libraries(lage_scale_filter ${VIF_LIBRARIES})
-install(TARGETS lage_scale_filter DESTINATION bin)
+add_executable(large_scale_filter large_scale_filter.cpp)
+target_link_libraries(large_scale_filter ${VIF_LIBRARIES})
+install(TARGETS large_scale_filter DESTINATION bin)
 
 add_executable(make_detect make_detect.cpp)
 target_link_libraries(make_detect ${VIF_LIBRARIES})
