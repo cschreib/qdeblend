@@ -37,11 +37,15 @@ if [ ${LARGE_SCALE_FILTER} -gt 0 ]; then
     ${BIN_DIR}/large_scale_filter image=${IMG}.fits size=${LARGE_SCALE_FILTER} mask=${IMG}-mask-all.fits
 fi
 
-if [ ${MASK_MORE} -eq 0 ]; then
-    ${BIN_DIR}/make_mask ${IMG}.fits ${DIR}/mask_border.reg ${IMG}-mask-border.fits
-fi
-if [ ${MASK_MORE} -eq 1 ]; then
-    ${BIN_DIR}/make_mask ${IMG}.fits ${DIR}/mask_border_more.reg ${IMG}-mask-border.fits
+if [ -f ${IMG}-mask-border.reg ]; then
+    ${BIN_DIR}/make_mask ${IMG}.fits ${IMG}-mask-border.reg ${IMG}-mask-border.fits
+else
+    if [ ${MASK_MORE} -eq 0 ]; then
+        ${BIN_DIR}/make_mask ${IMG}.fits ${DIR}/mask_border.reg ${IMG}-mask-border.fits
+    fi
+    if [ ${MASK_MORE} -eq 1 ]; then
+        ${BIN_DIR}/make_mask ${IMG}.fits ${DIR}/mask_border_more.reg ${IMG}-mask-border.fits
+    fi
 fi
 
 if [ -f ${IMG}-bad.reg ]; then
