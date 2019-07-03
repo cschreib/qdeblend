@@ -16,6 +16,8 @@ int phypp_main(int argc, char* argv[]) {
     std::string seg_image = "det_seg.fits";
     std::string base_out_dir = "imfit/";
 
+    file::mkdir(base_out_dir);
+
     std::string fit_sub_image = base_out_dir+file::remove_extension(fit_image)+"-sub.fits";
 
     struct {
