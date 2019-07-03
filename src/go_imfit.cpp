@@ -1,5 +1,8 @@
-#include <phypp.hpp>
-#include <phypp/astro/ds9.hpp>
+#include <vif.hpp>
+#include <vif/astro/ds9.hpp>
+
+using namespace vif;
+using namespace vif::astro;
 
 void write_and_spawn(const std::string& filename, const std::string& str) {
     std::ofstream out(filename);
@@ -10,7 +13,7 @@ void write_and_spawn(const std::string& filename, const std::string& str) {
     spawn("./"+filename);
 }
 
-int phypp_main(int argc, char* argv[]) {
+int vif_main(int argc, char* argv[]) {
     // std::string fit_image = "wfc3-f160w.fits";
     std::string fit_image = "det_stack.fits";
     std::string seg_image = "det_seg.fits";
