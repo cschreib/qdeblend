@@ -4,11 +4,16 @@ using namespace vif;
 using namespace vif::astro;
 
 int vif_main(int argc, char* argv[]) {
-    vec1s files = file::list_files("../", "*allsub.fits");
+    std::string indir = argv[1];
+    indir = file::directorize(indir);
+    std::string fdbdir = argv[2];
+    fdbdir = file::directorize(fdbdir);
+
+    vec1s files = file::list_files(indir, "*allsub.fits");
     inplace_sort(files);
 
-    auto db = read_filter_db(data_dir+"fits/filter-db/db.dat");
-    auto fdb = read_filter_map(data_dir+"fits/filter-db/fast.map");
+    auto db = read_filter_db(fdbdir+"/db.dat");
+    auto fdb = read_filter_map(fdbdir+"fast.map");
 
     vec1s bands = erase_end(files, "-allsub.fits");
     vec1f lambda = replicate(fnan, bands.size());
@@ -53,7 +58,7 @@ int vif_main(int argc, char* argv[]) {
     for (uint_t b : range(bands)) {
         vec1s model;
         vec1d tflx, terr, terr_sim;
-        fits::read_table("../"+files[b], "flux", tflx, "flux_err", terr, "flux_err_sim", terr_sim,
+        fits::read_table(indir+files[b], "flux", tflx, "flux_err", terr, "flux_err_sim", terr_sim,
             "model", model);
 
         if (count(is_finite(terr_sim)) == 0) {
@@ -81,7 +86,7 @@ int vif_main(int argc, char* argv[]) {
             dec = replicate(dnan, sid.size());
 
             for (uint_t i : range(sid)) {
-                std::string ff = "../imfit/models/"+sid[i]+".fits";
+                std::string ff = indir+"imfit/models/"+sid[i]+".fits";
 
                 fits::input_image iimg(ff);
                 vec2d data;

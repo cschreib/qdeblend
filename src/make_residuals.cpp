@@ -4,16 +4,18 @@ using namespace vif;
 using namespace vif::astro;
 
 int vif_main(int argc, char* argv[]) {
-    vec1s files = file::list_files("../", "*-allsub-sub.fits");
+    std::string indir = argv[1];
+    indir = file::directorize(indir);
+    std::string id = argv[2];
+
+    vec1s files = file::list_files(indir, "*-allsub-sub.fits");
     files = replace(files, "-allsub-sub.fits", "");
 
     file::mkdir("residuals/before");
     file::mkdir("residuals/after");
 
-    std::string id = argv[1];
-
     for (auto& b : files) {
-        std::string filename = "../"+b+"-allsub-sub.fits";
+        std::string filename = indir+b+"-allsub-sub.fits";
         fits::input_image iimg(filename);
 
         bool found = false;
@@ -36,7 +38,7 @@ int vif_main(int argc, char* argv[]) {
         fits::header hdr = iimg.read_header();
 
         fits::write("residuals/before/"+b+".fits", vec2f{img}, hdr);
-        file::copy("../"+b+".fits", "residuals/after/"+b+".fits");
+        file::copy(indir+b+".fits", "residuals/after/"+b+".fits");
     }
 
     return 0;
