@@ -8,6 +8,7 @@ int vif_main(int argc, char* argv[]) {
     indir = file::directorize(indir);
     std::string fdbdir = argv[2];
     fdbdir = file::directorize(fdbdir);
+    std::string id = argv[3];
 
     vec1s files = file::list_files(indir, "*allsub.fits");
     inplace_sort(files);
@@ -131,7 +132,7 @@ int vif_main(int argc, char* argv[]) {
 
     // In true FAST format with only the bands FAST knows
     vec1u idf = where(fbands != npos);
-    vec1u ids = where(sid == "center");
+    vec1u ids = where(sid == id);
     ascii::output_format opts;
     opts.header = hdr_fast;
     ascii::write_table("fast.cat", opts,
