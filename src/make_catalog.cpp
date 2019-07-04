@@ -96,24 +96,21 @@ int vif_main(int argc, char* argv[]) {
 
                 astro::xy2ad(astro::wcs(iimg.read_header()), mid[1]+1, mid[0]+1, ra[i], dec[i]);
             }
-
-            flux(_,b) = tflx;
-            flux_err(_,b) = terr;
         } else {
-            vec1u id1, id2;
-            match(sid, tsid, id1, id2);
-            id2 = complement(tsid, id2);
+            if (sid.size() != tsid.size()) {
+                error("mismatch in number of models for band ", bands[b], " (found ", tsid.size(),
+                    ", expected ", sid.size(), ")");
+                return 1;
+            }
 
-            append(sid, tsid[id2]);
-            append(ra, replicate(dnan, id2.size()));
-            append(dec, replicate(dnan, id2.size()));
-            append<0>(flux, replicate(fnan, id2.size(), flux.dims[1]));
-            append<0>(flux_err, replicate(fnan, id2.size(), flux.dims[1]));
-
-            match(sid, tsid, id1, id2);
-            flux(id1,b) = tflx[id2];
-            flux_err(id1,b) = terr[id2];
+            if (count(sid != tsid) != 0) {
+                error("mismatch in models for band ", bands[b]);
+                return 1;
+            }
         }
+
+        flux(_,b) = tflx;
+        flux_err(_,b) = terr;
     }
 
     // In FITS format
