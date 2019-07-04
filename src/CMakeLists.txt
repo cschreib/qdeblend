@@ -41,3 +41,11 @@ install(TARGETS make_mask DESTINATION bin)
 add_executable(multi_subtract multi_subtract.cpp)
 target_link_libraries(multi_subtract ${VIF_LIBRARIES})
 install(TARGETS multi_subtract DESTINATION bin)
+
+add_executable(make_catalog make_catalog.cpp)
+target_link_libraries(make_catalog ${VIF_LIBRARIES})
+install(TARGETS make_catalog DESTINATION bin)
+
+add_executable(make_residuals make_residuals.cpp)
+target_link_libraries(make_residuals ${VIF_LIBRARIES})
+install(TARGETS make_residuals DESTINATION bin)
