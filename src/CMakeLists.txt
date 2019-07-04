@@ -7,7 +7,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(NO_REFLECTION ON)
-set(NO_FFTW ON)
+set(NO_FFTW OFF)
 set(NO_GSL ON)
 set(NO_LAPACK ON)
 

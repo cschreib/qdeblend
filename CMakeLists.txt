@@ -55,7 +55,7 @@ ExternalProject_Add(vif
     GIT_TAG 61653ddd286f9bc49ceb594aeb089dc48c71d272
     CMAKE_ARGS
         -DNO_REFLECTION=ON
-        -DNO_FFTW=ON
+        -DNO_FFTW=OFF
         -DNO_LAPACK=ON
         -DNO_GSL=ON
         -DVIF_INPLACE_BUILD=ON
